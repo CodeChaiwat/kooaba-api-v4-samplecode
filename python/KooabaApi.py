@@ -12,7 +12,7 @@ from KASignature import KASignature
 
 version = '1.2.0'
 
-# Configuration 
+# Configuration
 
 # with KA auth, both http and https are possible
 UPLOAD_ENDPOINT = 'https://upload-api.kooaba.com/'
@@ -29,7 +29,7 @@ class BasicAPIClient:
         self.secret_token = secret_token
 
 
-    #### QUERY API   
+    #### QUERY API
 
     def query(self,filename, auth_method='Token'):
         data, content_type = self.data_from_file(filename)
@@ -57,7 +57,7 @@ class BasicAPIClient:
         (response, body) = self._send_request('POST', url, bytearray(data), content_type)
         return json.loads(body)
 
-   
+
     def replace_metadata(self, item_id, json_string):
         url = UPLOAD_ENDPOINT+'api/v4/items/'+item_id
         metadata = json.loads(json_string)
@@ -65,9 +65,9 @@ class BasicAPIClient:
         (response, body) = self._send_request('PUT', url, json.dumps(data), 'application/json')
         return json.loads(body)
 
-    
+
     ## HELPER METHODS
-    
+
     def data_from_file(self,filename):
         content_type, _encoding = mimetypes.guess_type(filename)
         with open(filename, 'rb') as f:
@@ -88,20 +88,20 @@ class BasicAPIClient:
         """
 
         if data is None:
-            logger.info("> %s %s", method, api_path) 
+            logger.info("> %s %s", method, api_path)
         elif len(data) < 4096:
             logger.info("> %s %s: > %s", method, api_path, data)
         else:
             logger.info("> %s %s: %sB", method, api_path, len(data))
-        
+
         parsed_url = urlparse(api_path)
-        
+
         if ((parsed_url.scheme != 'https') and (parsed_url.scheme != 'http')):
             raise RuntimeError("URL scheme '%s' not supported" % parsed_url.scheme)
-       
+
         port = parsed_url.port
         if port is None:
-            port = 80 
+            port = 80
             if (parsed_url.scheme == 'https'):
                port = 443
 
@@ -113,7 +113,7 @@ class BasicAPIClient:
             http = httplib.HTTPConnection(host, port )
         else:
             raise RuntimeError("URL scheme '%s' not supported" % parsed_url.scheme)
-        
+
         try:
             date = email.utils.formatdate(None, localtime=False, usegmt=True)
 
@@ -174,5 +174,5 @@ class BasicAPIClient:
         return content_type, body
 
     def get_content_type(self, filename):
-        return mimetypes.guess_type(filename)[0] or 'application/octet-stream' 
+        return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
 

@@ -121,7 +121,7 @@ class KASignature:
 
         Returns the signature as str (Python 2) or bytes (Python 3).
         """
-    
+
         if content is None:
             content_md5=""
         else:
@@ -131,4 +131,4 @@ class KASignature:
 
         return self.sign_with_content_md5(method, content_md5, content_type, date, request_path)
 
-   
+
