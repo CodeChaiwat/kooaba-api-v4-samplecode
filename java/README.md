@@ -3,7 +3,7 @@ Kooaba Java API v4 client
 
 Get your API keys by registering at http://platform.kooaba.com
 
-Set the "key Id" and "secret token" in `Client.java`.
+Set the "key Id" and "secret token" in `Query.java`.
 
 
 Eclipse
